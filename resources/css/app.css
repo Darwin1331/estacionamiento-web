@@ -1,0 +1,44 @@
+/* Tabler includes the Bootstrap 5 grid, utilities and components.
+   Do not import a second Bootstrap stylesheet or Tailwind reset. */
+@import '@tabler/core/dist/css/tabler.min.css';
+@import 'sweetalert2/dist/sweetalert2.min.css';
+@import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+
+body { min-height: 100vh; }
+.parking-document { overflow-wrap: anywhere; }
+.report-chart { position: relative; height: 280px; min-width: 0; }
+#report-content[aria-busy="true"] { opacity: .65; pointer-events: none; }
+@media print {
+    body.printing-operation > * { display: none !important; }
+    body.printing-operation .page { display: block !important; }
+    body.printing-operation .page > :not(.page-wrapper) { display: none !important; }
+    body.printing-operation .page-wrapper { margin: 0 !important; padding: 0 !important; }
+    body.printing-operation .page-wrapper > :not(.page-body) { display: none !important; }
+    body.printing-operation .page-body, body.printing-operation .container-fluid { margin: 0 !important; padding: 0 !important; }
+    body.printing-operation #operations-page,
+    body.printing-operation .modal:not(#print-modal),
+    body.printing-operation #print-modal .modal-header,
+    body.printing-operation #print-modal .modal-footer { display: none !important; }
+    body.printing-operation #print-modal { position: static !important; display: block !important; overflow: visible !important; opacity: 1 !important; }
+    body.printing-operation #print-modal .modal-dialog { transform: none !important; margin: 0 auto !important; max-width: 90mm; }
+    body.printing-operation #print-modal .modal-content { border: 0; box-shadow: none; }
+}
+.navbar-brand { font-weight: 700; }
+.parking-admin .page { min-height: 100vh; }
+.parking-admin .page-wrapper { min-width: 0; }
+.parking-admin .navbar-brand { white-space: normal; }
+.parking-admin .module-pending { cursor: default; opacity: .65; }
+.module-pending-label { margin-inline-start: auto; font-size: .625rem; }
+.sidebar-note { background: rgba(255, 255, 255, .06); color: #b8c4d4; }
+.stat-card .card-body { min-width: 0; }
+.stat-label { font-size: .875rem; font-weight: 500; line-height: 1.5; margin-bottom: .5rem; }
+.stat-value { font-size: clamp(1.35rem, 2vw, 2rem); font-weight: 600; line-height: 1.25; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.stat-card .stat-label { overflow-wrap: normal; word-break: normal; }
+.dt-container .dt-layout-row { gap: .75rem; }
+.dt-container .dt-search input { margin-left: .5rem; }
+.table-responsive { min-height: 11rem; }
+#permissions-options .form-check-input { cursor: pointer; }
+#permissions-options:disabled .form-check-input { cursor: default; }
+@media (min-width: 992px) {
+    .parking-admin #sidebar-menu { flex-direction: column; }
+}
