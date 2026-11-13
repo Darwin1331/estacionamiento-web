@@ -42,6 +42,8 @@ $(async () => {
             const load = operationModules[module];
             if (!load) throw new Error(`Módulo operativo desconocido: ${module}`);
             await (await load()).init();
+        } else if (document.getElementById('parking-map')) {
+            (await import('./parking-map.js')).initParkingMap();
         } else if (document.getElementById('report-config')) {
             await (await import('./reports.js')).initReports();
         } else if (document.getElementById('users-config')) {

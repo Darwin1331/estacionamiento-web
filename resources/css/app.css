@@ -5,6 +5,11 @@
 @import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
 
 body { min-height: 100vh; }
+.parking-space-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); gap: .75rem; }
+.parking-space { border: 1px solid; border-radius: 8px; padding: .8rem; min-width: 0; overflow-wrap: anywhere; }
+.parking-space-available { background: #edf7f0; border-color: #b7d9c1; color: #235b38; }
+.parking-space-occupied { background: #fcf0f0; border-color: #e8bdbd; color: #843434; }
+.parking-space-inactive { background: #eef1f4; border-color: #cdd5de; color: #4b5a69; }
 .parking-document { overflow-wrap: anywhere; }
 .report-chart { position: relative; height: 280px; min-width: 0; }
 #report-content[aria-busy="true"] { opacity: .65; pointer-events: none; }

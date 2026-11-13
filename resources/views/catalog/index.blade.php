@@ -2,8 +2,11 @@
 @section('title', $title)
 @section('description', 'Consulta y gestión de '.mb_strtolower($title).' del estacionamiento.')
 @section('content')
+@if(request()->routeIs('catalog.espacios.index'))
+@include('catalog.space-navigation')
+@endif
 <div class="card">
- <div class="card-header d-flex align-items-center justify-content-between">
+ <div class="card-header d-flex flex-wrap gap-2 align-items-center justify-content-between">
   <h2 class="card-title">Listado de {{ mb_strtolower($title) }}</h2>
   @if($canCreate)<button type="button" class="btn btn-primary" id="catalog-new"><x-icon name="check" class="me-1" /> Nuevo registro</button>@endif
  </div>

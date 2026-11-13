@@ -13,6 +13,7 @@ use App\Http\Controllers\Catalog\VehicleController;
 use App\Http\Controllers\Catalog\VehicleTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OperationsController;
+use App\Http\Controllers\ParkingMapController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->midd
 Route::middleware(['auth', 'active'])->group(function () {
     Route::view('/sin-acceso', 'auth.no-access')->name('access.none');
     Route::get('/dashboard', DashboardController::class)->middleware('can:dashboard.view')->name('dashboard');
+    Route::get('/espacios/mapa', [ParkingMapController::class, 'index'])->middleware('can:espacios.view')->name('catalog.espacios.map');
+    Route::get('/espacios/mapa/datos', [ParkingMapController::class, 'data'])->middleware('can:espacios.view')->name('catalog.espacios.map.data');
     Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reportes/{report}/datos', [ReportController::class, 'data'])->whereIn('report', ['ingresos', 'vehiculos', 'ocupacion'])->name('reports.data');
     foreach (['pdf' => 'pdf', 'xlsx' => 'excel'] as $format => $permission) {
