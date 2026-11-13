@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import {initOperationPage} from './operaciones-base.js';
 import {initTicketPrint} from './tickets.js';
 import {ajaxJson} from './common.js';
+import {subscriptionNotice} from './subscription-notice.js';
 
 export function init() {
     const context = initOperationPage('salidas');
@@ -24,6 +25,7 @@ export function initCheckout(context) {
         const details = {Boleto: t.number, Placa: t.plate, Espacio: t.space, Entrada: date(t.entered_at), Duración: `${Math.floor(minutes / 60)} h ${minutes % 60} min`, Tarifa: `${q.rate_amount} Bs / ${unitName(q.unit, q.fraction_minutes)}`, 'Unidades iniciadas': q.units};
         $('#stay-detail').html(Object.entries(details).map(([label, value]) => `<dt class="col-sm-4">${html(label)}</dt><dd class="col-sm-8">${html(value)}</dd>`).join(''));
         $('#checkout-total').text(q.total);
+        $('#checkout-subscription').text(subscriptionNotice(response.subscription)).toggleClass('d-none', !response.subscription);
         $(checkoutForm).find('[name="expected_total"]').val(q.total);
         $('#checkout-method option').each(function () { this.disabled = !response.methods[this.value]; });
         if ($('#checkout-method option:selected').prop('disabled')) $('#checkout-method').val(response.methods.cash ? 'cash' : (response.methods.qr ? 'qr' : ''));

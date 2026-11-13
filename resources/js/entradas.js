@@ -2,6 +2,7 @@ import $ from 'jquery';
 import {initOperationPage} from './operaciones-base.js';
 import {initTicketPrint} from './tickets.js';
 import {ajaxJson} from './common.js';
+import {subscriptionNotice} from './subscription-notice.js';
 
 export async function init() {
     const context = initOperationPage('entradas');
@@ -17,6 +18,7 @@ export async function init() {
     const resetVehicle = () => {
         $(entryForm).find('[name="vehicle_id"]').val('');
         $('#entry-space, #entry-rate').empty();
+        $('#entry-subscription').addClass('d-none').text('');
     };
     const findVehicle = async () => {
         const sequence = ++lookupSequence;
@@ -34,6 +36,7 @@ export async function init() {
                 return;
             }
             $('#vehicle-result').text(`${response.vehicle.plate} · ${response.vehicle.type}${response.vehicle.is_active ? '' : ' · Inactivo'}`);
+            $('#entry-subscription').text(subscriptionNotice(response.subscription)).toggleClass('d-none', !response.subscription);
             $(entryForm).find('[name="vehicle_id"]').val(response.vehicle.id);
             $('#entry-space').append(new Option('Selecciona un espacio', ''));
             response.spaces.forEach(space => $('#entry-space').append(new Option(space.name, space.id)));

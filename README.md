@@ -99,7 +99,15 @@ El administrador debe habilitar expresamente las operaciones y reportes necesari
 4. En **Salidas**, buscar ticket o placa y consultar la cotización. El servidor recalcula al confirmar; si el importe cambió, se debe actualizar y confirmar nuevamente.
 5. Cobrar en efectivo o confirmar manualmente el QR. **No existe integración bancaria ni verificación automática de QR**. Un pago confirmado registra operador y fecha, cierra el ticket y libera el espacio en la misma transacción.
 
-Los abonados tienen un registro contractual y reserva opcional. Su importe no equivale a un pago confirmado. La revisión de cobertura y sus límites se documenta en [docs/abonados.md](docs/abonados.md); no se deben asumir estancias gratuitas por pertenecer a un cliente abonado.
+Los abonados tienen un registro contractual y reserva opcional. Entrada y cotización muestran la vigencia verificable del vehículo cuando el usuario tiene `abonados.view`; el aviso es informativo y mantiene el cobro normal. Su importe no equivale a un pago confirmado. La cobertura automática queda pendiente según [docs/abonados.md](docs/abonados.md).
+
+## Mapa de ocupación
+
+En **Gestión → Espacios → Mapa de ocupación** se muestran tarjetas por piso y sector, con código, estado y placa si el usuario tiene `vehiculos.view` o `tickets.view`. La pantalla y su endpoint exigen `espacios.view`.
+
+El mapa consulta los espacios y tickets abiertos, sin almacenar otra ocupación. Verde indica disponibilidad física, rojo un ticket abierto y gris inactividad, mantenimiento o una condición que requiere revisión. Los tickets abiertos tienen prioridad incluso ante un estado incoherente. Las reservas de abonados siguen validándose al registrar una entrada: el verde no garantiza que cualquier vehículo pueda usar el espacio.
+
+Incluye totales y porcentaje `ocupados / (disponibles + ocupados)`, con cero cuando no hay capacidad utilizable. Actualiza cada 30 segundos y mediante el botón **Actualizar**, evita peticiones simultáneas y pausa el sondeo con la pestaña oculta. Los fallos de conexión se indican sin presentar datos antiguos como recientes; la pérdida de acceso detiene el sondeo y limpia los datos.
 
 ## Reportes y exportaciones
 

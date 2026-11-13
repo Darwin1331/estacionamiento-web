@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\{Payment, PaymentMethod, Rate, Space, Ticket, Vehicle, VehicleType};
 use App\Services\{ParkingBilling, ParkingService};
+use App\Services\SubscriptionRecognition;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class OperationsController extends Controller
 {
-    public function __construct(private ParkingService $parking, private ParkingBilling $billing) {}
+    public function __construct(private ParkingService $parking, private ParkingBilling $billing, private SubscriptionRecognition $subscriptions) {}
 
     public function index(Request $request)
     {
@@ -92,6 +93,8 @@ class OperationsController extends Controller
             'vehicle' => $vehicle ? ['id' => $vehicle->id, 'plate' => $vehicle->plate, 'type' => $vehicle->vehicleType->name, 'is_active' => $vehicle->is_active] : null,
             'types' => $request->user()->can('vehiculos.create') ? VehicleType::where('is_active', true)->orderBy('name')->get(['id', 'name']) : [],
             'spaces' => $spaces, 'rates' => $rates,
+            'subscription' => $vehicle && $request->user()->can('abonados.view')
+                ? $this->subscriptions->forVehicle($vehicle->id, now()) : null,
         ]);
     }
 
@@ -128,6 +131,8 @@ class OperationsController extends Controller
         }
 
         return response()->json(['data' => $this->ticketData($ticket), 'quote' => $this->billing->quote($ticket, now()->startOfSecond()),
+            'subscription' => request()->user()->can('abonados.view')
+                ? $this->subscriptions->forVehicle($ticket->vehicle_id, now()) : null,
             'methods' => [
                 'cash' => PaymentMethod::where('is_active', true)->where('name', 'Efectivo')->exists(),
                 'qr' => PaymentMethod::where('is_active', true)->whereIn('name', ['QR', 'Transferencia / QR'])->exists(),
