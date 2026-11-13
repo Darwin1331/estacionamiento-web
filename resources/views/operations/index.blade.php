@@ -45,6 +45,7 @@
             <label class="form-label" for="entry-plate">Placa del vehículo</label>
             <div class="input-group mb-2"><input id="entry-plate" class="form-control text-uppercase" maxlength="20" autocomplete="off"><button class="btn btn-outline-primary" type="button" id="find-vehicle">Buscar</button></div>
             <div id="vehicle-result" class="text-secondary mb-3" aria-live="polite">Busca la placa antes de seleccionar el espacio.</div>
+            <div id="entry-subscription" class="alert alert-secondary d-none" role="status"></div>
             <input type="hidden" name="vehicle_id">
             @if($config['canCreateVehicle'])<button type="button" id="new-vehicle" class="btn btn-outline-primary mb-3">Registrar vehículo nuevo</button>@endif
             <div class="row g-3">
@@ -84,6 +85,7 @@
             </form>
             <div id="checkout-detail" class="d-none">
                 <dl id="stay-detail" class="row"></dl>
+                <div id="checkout-subscription" class="alert alert-secondary d-none" role="status"></div>
                 <div class="alert alert-info">Total a pagar: <strong class="fs-2" id="checkout-total"></strong> Bs <button class="btn btn-sm btn-outline-primary ms-2" type="button" id="refresh-quote">Actualizar cálculo</button><div class="small mt-2">El importe se verifica de nuevo al confirmar el pago.</div></div>
                 <form id="checkout-form">
                     <div class="alert alert-danger d-none" data-form-errors role="alert"></div>

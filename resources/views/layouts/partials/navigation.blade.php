@@ -13,7 +13,9 @@
             $visibleItems = collect($items)->filter(fn ($item) => ($item['route'] && ! ($item['any_permission'] ?? false))
                 ? auth()->user()->can($item['permissions'][0])
                 : auth()->user()->canAny($item['permissions']));
-            $expanded = $visibleItems->contains(fn ($item) => $item['route'] && request()->routeIs($item['route']));
+            $isCurrent = fn ($item) => $item['route'] && (request()->routeIs($item['route'])
+                || ($item['route'] === 'catalog.espacios.index' && request()->routeIs('catalog.espacios.map*')));
+            $expanded = $visibleItems->contains($isCurrent);
             $icon = ['gestion' => 'parking', 'operaciones' => 'arrows', 'reportes' => 'report', 'administracion' => 'users'][$module];
         @endphp
         @continue($visibleItems->isEmpty())
@@ -25,11 +27,11 @@
             </button>
             <ul class="navbar-nav collapse {{ $expanded ? 'show' : '' }} ps-3" id="nav-{{ $module }}">
                 @foreach($visibleItems as $item)
-                    <li class="nav-item {{ $item['route'] && request()->routeIs($item['route']) ? 'active' : '' }}">
+                    <li class="nav-item {{ $isCurrent($item) ? 'active' : '' }}">
                         @if($item['pending'])
                             <span class="nav-link module-pending" aria-disabled="true"><span class="nav-link-title">{{ $item['label'] }}</span><span class="module-pending-label">Próximo</span></span>
                         @else
-                            <a class="nav-link" href="{{ route($item['route']) }}" @if(request()->routeIs($item['route'])) aria-current="page" @endif><span class="nav-link-title">{{ $item['label'] }}</span></a>
+                            <a class="nav-link" href="{{ route($item['route']) }}" @if($isCurrent($item)) aria-current="page" @endif><span class="nav-link-title">{{ $item['label'] }}</span></a>
                         @endif
                     </li>
                 @endforeach
