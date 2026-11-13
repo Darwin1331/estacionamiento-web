@@ -12,8 +12,8 @@
     <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark" aria-label="Menú administrativo">
         <div class="container-fluid">
             <a class="navbar-brand gap-2" href="{{ route(auth()->user()->startRoute()) }}">
-                <span class="avatar bg-primary text-white"><x-icon name="parking" /></span>
-                Estacionamiento
+                <span class="brand-mark"><x-icon name="parking" /></span>
+                <span class="brand-copy"><span class="brand-name">Estacionamiento</span><span class="brand-caption">Gestión y control</span></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Abrir menú">
                 <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
     </aside>
     <header class="navbar navbar-expand-md d-print-none">
         <div class="container-fluid px-3 px-md-4">
-            <span class="navbar-brand mb-0">Panel administrativo</span>
+            <span class="navbar-brand mb-0">Panel de control</span>
             <div class="d-flex align-items-center gap-3 ms-auto">
                 <div class="text-end">
                     <div class="fw-medium">{{ auth()->user()->name }}</div>
@@ -45,7 +45,7 @@
     <div class="page-wrapper">
         <div class="page-header">
             <div class="container-fluid px-3 px-md-4">
-                <div class="page-pretitle">Estacionamiento</div>
+                <div class="page-pretitle">Gestión operativa</div>
                 <h1 class="page-title">@yield('title', 'Dashboard')</h1>
                 <p class="text-secondary mt-2 mb-0">@yield('description', 'Administración y control de acceso al sistema.')</p>
             </div>
@@ -62,7 +62,7 @@
             </div>
         </main>
         <footer class="footer footer-transparent py-3">
-            <div class="container-fluid px-3 px-md-4 text-secondary small">Sistema de estacionamiento · {{ auth()->user()->role_label }}</div>
+            <div class="container-fluid px-3 px-md-4 text-secondary small">Sistema de Estacionamiento · Gestión y control · {{ auth()->user()->role_label }}</div>
         </footer>
     </div>
 </div>
